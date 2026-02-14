@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+
+  --color-gallery-950: #0f0e0c;
+  --color-gallery-900: #1a1916;
+  --color-gallery-850: #222019;
+  --color-gallery-800: #2d2a22;
+  --color-gallery-700: #3d3930;
+  --color-gallery-600: #5c5647;
+  --color-gallery-500: #7a7365;
+  --color-gallery-400: #9e9688;
+  --color-gallery-300: #c4bdb0;
+  --color-gallery-200: #ddd8ce;
+  --color-gallery-100: #edeae4;
+  --color-gallery-50: #f7f5f2;
+
+  --color-gold-500: #b8964e;
+  --color-gold-400: #c9a962;
+  --color-gold-300: #d4ba7a;
+  --color-gold-200: #e2d1a4;
+  --color-gold-100: #f0e6cc;
+
+  --color-ivory: #faf8f4;
+  --color-cream: #f5f1ea;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-ivory);
+  color: var(--color-gallery-900);
+  line-height: 1.6;
+  margin: 0;
+}
+
+::selection {
+  background-color: var(--color-gold-300);
+  color: var(--color-gallery-950);
+}
+
+/* Grain overlay on dark sections */
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  z-index: 1;
+}
+
+.grain > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Staggered animation */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes gold-line-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease both;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-gold-line {
+  animation: gold-line-grow 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: left;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
+
+/* Gold decorative line */
+.gold-line {
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-gold-500), var(--color-gold-300), transparent);
+}
+
+.gold-line-center {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold-500), var(--color-gold-300), var(--color-gold-500), transparent);
+}
+
+/* Image hover zoom */
+.img-zoom {
+  overflow: hidden;
+}
+
+.img-zoom img {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.img-zoom:hover img {
+  transform: scale(1.06);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-gallery-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gallery-400);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gallery-500);
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--color-gold-500);
+  outline-offset: 2px;
+}
+
+/* Horizontal scrollbar hide for carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
