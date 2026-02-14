@@ -15,7 +15,7 @@ const statusLabels: Record<string, string> = {
 export const Route = createFileRoute('/events')({
   component: EventsPage,
   loader: async () => {
-    const events = getAllEvents();
+    const events = await getAllEvents();
     const upcoming = events.filter(e => e.status === EventStatus.UPCOMING || e.status === EventStatus.ONGOING);
     const past = events.filter(e => e.status === EventStatus.COMPLETED);
     return { upcoming, past };

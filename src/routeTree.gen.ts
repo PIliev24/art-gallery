@@ -14,8 +14,20 @@ import { Route as EventsRouteImport } from './routes/events'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CollectionRouteImport } from './routes/collection'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as ArtworkArtworkIdRouteImport } from './routes/artwork.$artworkId'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminExhibitionsIndexRouteImport } from './routes/admin/exhibitions/index'
+import { Route as AdminEventsIndexRouteImport } from './routes/admin/events/index'
+import { Route as AdminArtworksIndexRouteImport } from './routes/admin/artworks/index'
+import { Route as AdminExhibitionsNewRouteImport } from './routes/admin/exhibitions/new'
+import { Route as AdminExhibitionsIdRouteImport } from './routes/admin/exhibitions/$id'
+import { Route as AdminEventsNewRouteImport } from './routes/admin/events/new'
+import { Route as AdminEventsIdRouteImport } from './routes/admin/events/$id'
+import { Route as AdminArtworksNewRouteImport } from './routes/admin/artworks/new'
+import { Route as AdminArtworksIdRouteImport } from './routes/admin/artworks/$id'
 
 const ExhibitionsRoute = ExhibitionsRouteImport.update({
   id: '/exhibitions',
@@ -42,25 +54,97 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const ArtworkArtworkIdRoute = ArtworkArtworkIdRouteImport.update({
   id: '/artwork/$artworkId',
   path: '/artwork/$artworkId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminExhibitionsIndexRoute = AdminExhibitionsIndexRouteImport.update({
+  id: '/exhibitions/',
+  path: '/exhibitions/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminEventsIndexRoute = AdminEventsIndexRouteImport.update({
+  id: '/events/',
+  path: '/events/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminArtworksIndexRoute = AdminArtworksIndexRouteImport.update({
+  id: '/artworks/',
+  path: '/artworks/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminExhibitionsNewRoute = AdminExhibitionsNewRouteImport.update({
+  id: '/exhibitions/new',
+  path: '/exhibitions/new',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminExhibitionsIdRoute = AdminExhibitionsIdRouteImport.update({
+  id: '/exhibitions/$id',
+  path: '/exhibitions/$id',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminEventsNewRoute = AdminEventsNewRouteImport.update({
+  id: '/events/new',
+  path: '/events/new',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminEventsIdRoute = AdminEventsIdRouteImport.update({
+  id: '/events/$id',
+  path: '/events/$id',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminArtworksNewRoute = AdminArtworksNewRouteImport.update({
+  id: '/artworks/new',
+  path: '/artworks/new',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminArtworksIdRoute = AdminArtworksIdRouteImport.update({
+  id: '/artworks/$id',
+  path: '/artworks/$id',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/collection': typeof CollectionRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/exhibitions': typeof ExhibitionsRoute
+  '/admin/login': typeof AdminLoginRoute
   '/artwork/$artworkId': typeof ArtworkArtworkIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/artworks/$id': typeof AdminArtworksIdRoute
+  '/admin/artworks/new': typeof AdminArtworksNewRoute
+  '/admin/events/$id': typeof AdminEventsIdRoute
+  '/admin/events/new': typeof AdminEventsNewRoute
+  '/admin/exhibitions/$id': typeof AdminExhibitionsIdRoute
+  '/admin/exhibitions/new': typeof AdminExhibitionsNewRoute
+  '/admin/artworks/': typeof AdminArtworksIndexRoute
+  '/admin/events/': typeof AdminEventsIndexRoute
+  '/admin/exhibitions/': typeof AdminExhibitionsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -69,28 +153,63 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/exhibitions': typeof ExhibitionsRoute
+  '/admin/login': typeof AdminLoginRoute
   '/artwork/$artworkId': typeof ArtworkArtworkIdRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/artworks/$id': typeof AdminArtworksIdRoute
+  '/admin/artworks/new': typeof AdminArtworksNewRoute
+  '/admin/events/$id': typeof AdminEventsIdRoute
+  '/admin/events/new': typeof AdminEventsNewRoute
+  '/admin/exhibitions/$id': typeof AdminExhibitionsIdRoute
+  '/admin/exhibitions/new': typeof AdminExhibitionsNewRoute
+  '/admin/artworks': typeof AdminArtworksIndexRoute
+  '/admin/events': typeof AdminEventsIndexRoute
+  '/admin/exhibitions': typeof AdminExhibitionsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/collection': typeof CollectionRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/exhibitions': typeof ExhibitionsRoute
+  '/admin/login': typeof AdminLoginRoute
   '/artwork/$artworkId': typeof ArtworkArtworkIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/artworks/$id': typeof AdminArtworksIdRoute
+  '/admin/artworks/new': typeof AdminArtworksNewRoute
+  '/admin/events/$id': typeof AdminEventsIdRoute
+  '/admin/events/new': typeof AdminEventsNewRoute
+  '/admin/exhibitions/$id': typeof AdminExhibitionsIdRoute
+  '/admin/exhibitions/new': typeof AdminExhibitionsNewRoute
+  '/admin/artworks/': typeof AdminArtworksIndexRoute
+  '/admin/events/': typeof AdminEventsIndexRoute
+  '/admin/exhibitions/': typeof AdminExhibitionsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/about'
     | '/collection'
     | '/contact'
     | '/events'
     | '/exhibitions'
+    | '/admin/login'
     | '/artwork/$artworkId'
+    | '/admin/'
+    | '/admin/artworks/$id'
+    | '/admin/artworks/new'
+    | '/admin/events/$id'
+    | '/admin/events/new'
+    | '/admin/exhibitions/$id'
+    | '/admin/exhibitions/new'
+    | '/admin/artworks/'
+    | '/admin/events/'
+    | '/admin/exhibitions/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -99,20 +218,44 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/exhibitions'
+    | '/admin/login'
     | '/artwork/$artworkId'
+    | '/admin'
+    | '/admin/artworks/$id'
+    | '/admin/artworks/new'
+    | '/admin/events/$id'
+    | '/admin/events/new'
+    | '/admin/exhibitions/$id'
+    | '/admin/exhibitions/new'
+    | '/admin/artworks'
+    | '/admin/events'
+    | '/admin/exhibitions'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/about'
     | '/collection'
     | '/contact'
     | '/events'
     | '/exhibitions'
+    | '/admin/login'
     | '/artwork/$artworkId'
+    | '/admin/'
+    | '/admin/artworks/$id'
+    | '/admin/artworks/new'
+    | '/admin/events/$id'
+    | '/admin/events/new'
+    | '/admin/exhibitions/$id'
+    | '/admin/exhibitions/new'
+    | '/admin/artworks/'
+    | '/admin/events/'
+    | '/admin/exhibitions/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   CollectionRoute: typeof CollectionRoute
   ContactRoute: typeof ContactRoute
@@ -158,12 +301,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/artwork/$artworkId': {
       id: '/artwork/$artworkId'
@@ -172,11 +329,114 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArtworkArtworkIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/exhibitions/': {
+      id: '/admin/exhibitions/'
+      path: '/exhibitions'
+      fullPath: '/admin/exhibitions/'
+      preLoaderRoute: typeof AdminExhibitionsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/events/': {
+      id: '/admin/events/'
+      path: '/events'
+      fullPath: '/admin/events/'
+      preLoaderRoute: typeof AdminEventsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/artworks/': {
+      id: '/admin/artworks/'
+      path: '/artworks'
+      fullPath: '/admin/artworks/'
+      preLoaderRoute: typeof AdminArtworksIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/exhibitions/new': {
+      id: '/admin/exhibitions/new'
+      path: '/exhibitions/new'
+      fullPath: '/admin/exhibitions/new'
+      preLoaderRoute: typeof AdminExhibitionsNewRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/exhibitions/$id': {
+      id: '/admin/exhibitions/$id'
+      path: '/exhibitions/$id'
+      fullPath: '/admin/exhibitions/$id'
+      preLoaderRoute: typeof AdminExhibitionsIdRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/events/new': {
+      id: '/admin/events/new'
+      path: '/events/new'
+      fullPath: '/admin/events/new'
+      preLoaderRoute: typeof AdminEventsNewRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/events/$id': {
+      id: '/admin/events/$id'
+      path: '/events/$id'
+      fullPath: '/admin/events/$id'
+      preLoaderRoute: typeof AdminEventsIdRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/artworks/new': {
+      id: '/admin/artworks/new'
+      path: '/artworks/new'
+      fullPath: '/admin/artworks/new'
+      preLoaderRoute: typeof AdminArtworksNewRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/artworks/$id': {
+      id: '/admin/artworks/$id'
+      path: '/artworks/$id'
+      fullPath: '/admin/artworks/$id'
+      preLoaderRoute: typeof AdminArtworksIdRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
   }
 }
 
+interface AdminRouteRouteChildren {
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminArtworksIdRoute: typeof AdminArtworksIdRoute
+  AdminArtworksNewRoute: typeof AdminArtworksNewRoute
+  AdminEventsIdRoute: typeof AdminEventsIdRoute
+  AdminEventsNewRoute: typeof AdminEventsNewRoute
+  AdminExhibitionsIdRoute: typeof AdminExhibitionsIdRoute
+  AdminExhibitionsNewRoute: typeof AdminExhibitionsNewRoute
+  AdminArtworksIndexRoute: typeof AdminArtworksIndexRoute
+  AdminEventsIndexRoute: typeof AdminEventsIndexRoute
+  AdminExhibitionsIndexRoute: typeof AdminExhibitionsIndexRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminLoginRoute: AdminLoginRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AdminArtworksIdRoute: AdminArtworksIdRoute,
+  AdminArtworksNewRoute: AdminArtworksNewRoute,
+  AdminEventsIdRoute: AdminEventsIdRoute,
+  AdminEventsNewRoute: AdminEventsNewRoute,
+  AdminExhibitionsIdRoute: AdminExhibitionsIdRoute,
+  AdminExhibitionsNewRoute: AdminExhibitionsNewRoute,
+  AdminArtworksIndexRoute: AdminArtworksIndexRoute,
+  AdminEventsIndexRoute: AdminEventsIndexRoute,
+  AdminExhibitionsIndexRoute: AdminExhibitionsIndexRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   CollectionRoute: CollectionRoute,
   ContactRoute: ContactRoute,

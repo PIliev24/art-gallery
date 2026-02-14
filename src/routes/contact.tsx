@@ -7,7 +7,7 @@ import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 export const Route = createFileRoute('/contact')({
   component: ContactPage,
   loader: async () => {
-    return { info: getGalleryInfo() };
+    return { info: await getGalleryInfo() };
   },
 });
 

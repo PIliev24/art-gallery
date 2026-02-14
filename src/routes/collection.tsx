@@ -17,7 +17,7 @@ export const Route = createFileRoute('/collection')({
   component: CollectionPage,
   loader: async () => {
     return {
-      artworks: getAllArtworks(),
+      artworks: await getAllArtworks(),
     };
   },
 });

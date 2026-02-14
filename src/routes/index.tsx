@@ -9,9 +9,9 @@ export const Route = createFileRoute('/')({
   component: HomePage,
   loader: async () => {
     return {
-      artworks: getFeaturedArtworks(),
-      exhibitions: getCurrentExhibitions(),
-      events: getUpcomingEvents(),
+      artworks: await getFeaturedArtworks(),
+      exhibitions: await getCurrentExhibitions(),
+      events: await getUpcomingEvents(),
     };
   },
 });

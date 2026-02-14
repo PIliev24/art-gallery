@@ -21,7 +21,7 @@ const statusColors: Record<string, string> = {
 export const Route = createFileRoute('/exhibitions')({
   component: ExhibitionsPage,
   loader: async () => {
-    const exhibitions = getAllExhibitions();
+    const exhibitions = await getAllExhibitions();
     const current = exhibitions.filter(e => e.status === ExhibitionStatus.CURRENT);
     const upcoming = exhibitions.filter(e => e.status === ExhibitionStatus.UPCOMING);
     const past = exhibitions.filter(e => e.status === ExhibitionStatus.PAST);

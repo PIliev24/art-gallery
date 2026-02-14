@@ -16,8 +16,8 @@ const categoryLabels: Record<string, string> = {
 export const Route = createFileRoute('/artwork/$artworkId')({
   component: ArtworkDetailPage,
   loader: async ({ params }) => {
-    const artwork = getArtworkById(params.artworkId);
-    const all = getAllArtworks();
+    const artwork = await getArtworkById(params.artworkId);
+    const all = await getAllArtworks();
     const related = all.filter(a => a.id !== params.artworkId).slice(0, 3);
     return { artwork, related };
   },
