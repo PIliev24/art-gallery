@@ -121,37 +121,39 @@ function EventsPage() {
             {/* Featured event */}
             {upcoming.length > 0 && upcoming[0].coverImage && (
               <div className="mb-16">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                  <div className="img-zoom aspect-[16/10] overflow-hidden relative">
-                    <img
-                      src={upcoming[0].coverImage}
-                      alt={upcoming[0].title}
-                      className="h-full w-full object-cover"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <span className="inline-block px-3 py-1 text-[10px] tracking-[0.2em] uppercase font-medium bg-[var(--color-gold-500)] text-[var(--color-gallery-950)]">
-                        {statusLabels[upcoming[0].status]}
-                      </span>
+                <Link to="/event/$slug" params={{ slug: upcoming[0].slug }} className="block group">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div className="img-zoom aspect-[16/10] overflow-hidden relative">
+                      <img
+                        src={upcoming[0].coverImage}
+                        alt={upcoming[0].title}
+                        className="h-full w-full object-cover"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <span className="inline-block px-3 py-1 text-[10px] tracking-[0.2em] uppercase font-medium bg-[var(--color-gold-500)] text-[var(--color-gallery-950)]">
+                          {statusLabels[upcoming[0].status]}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs tracking-[0.3em] uppercase text-[var(--color-gold-500)] mb-4">
+                        {formatDate(upcoming[0].startDate)}
+                      </p>
+                      <h3 className="font-serif text-3xl md:text-4xl font-light text-[var(--color-gallery-900)] leading-tight mb-4 group-hover:text-[var(--color-gold-500)] transition-colors duration-300">
+                        {upcoming[0].title}
+                      </h3>
+                      <p className="text-[var(--color-gallery-600)] leading-relaxed mb-6">
+                        {upcoming[0].description}
+                      </p>
+                      {upcoming[0].location && (
+                        <div className="flex items-center gap-2 text-sm text-[var(--color-gallery-500)]">
+                          <MapPin size={14} className="text-[var(--color-gold-500)]" />
+                          <span>{upcoming[0].location}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
-                  <div>
-                    <p className="text-xs tracking-[0.3em] uppercase text-[var(--color-gold-500)] mb-4">
-                      {formatDate(upcoming[0].startDate)}
-                    </p>
-                    <h3 className="font-serif text-3xl md:text-4xl font-light text-[var(--color-gallery-900)] leading-tight mb-4">
-                      {upcoming[0].title}
-                    </h3>
-                    <p className="text-[var(--color-gallery-600)] leading-relaxed mb-6">
-                      {upcoming[0].description}
-                    </p>
-                    {upcoming[0].location && (
-                      <div className="flex items-center gap-2 text-sm text-[var(--color-gallery-500)]">
-                        <MapPin size={14} className="text-[var(--color-gold-500)]" />
-                        <span>{upcoming[0].location}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                </Link>
                 <div className="mt-12 h-px bg-[var(--color-gallery-200)]" />
               </div>
             )}
@@ -160,7 +162,9 @@ function EventsPage() {
             {upcoming.length > 1 && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 {upcoming.slice(1).map((event) => (
-                  <EventCard key={event.id} event={event} />
+                  <Link key={event.id} to="/event/$slug" params={{ slug: event.slug }}>
+                    <EventCard event={event} />
+                  </Link>
                 ))}
               </div>
             )}
@@ -181,7 +185,7 @@ function EventsPage() {
 
             <div className="space-y-8">
               {past.map((event) => (
-                <div key={event.id} className="flex items-start gap-6 py-6 border-b border-[var(--color-gallery-200)]">
+                <Link key={event.id} to="/event/$slug" params={{ slug: event.slug }} className="group flex items-start gap-6 py-6 border-b border-[var(--color-gallery-200)]">
                   <div className="shrink-0 w-16 text-center py-2">
                     <span className="block text-2xl font-serif text-[var(--color-gallery-500)]">
                       {event.startDate.getDate()}
@@ -191,7 +195,7 @@ function EventsPage() {
                     </span>
                   </div>
                   <div>
-                    <h3 className="font-serif text-lg text-[var(--color-gallery-700)] mb-1">
+                    <h3 className="font-serif text-lg text-[var(--color-gallery-700)] mb-1 group-hover:text-[var(--color-gold-500)] transition-colors duration-300">
                       {event.title}
                     </h3>
                     <p className="text-sm text-[var(--color-gallery-500)]">
@@ -204,7 +208,7 @@ function EventsPage() {
                       </p>
                     )}
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

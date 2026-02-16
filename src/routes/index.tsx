@@ -138,7 +138,7 @@ function HomePage() {
                   )}
                 </div>
                 <Button asChild variant="gold">
-                  <Link to="/exhibitions">Научи повече</Link>
+                  <Link to="/exhibition/$slug" params={{ slug: exhibitions[0].slug }}>Научи повече</Link>
                 </Button>
               </div>
 
@@ -184,7 +184,8 @@ function HomePage() {
               {events.slice(0, 3).map((event) => (
                 <Link
                   key={event.id}
-                  to="/events"
+                  to="/event/$slug"
+                  params={{ slug: event.slug }}
                   className="group bg-[var(--color-ivory)] p-8 hover:bg-[var(--color-cream)] transition-colors duration-500"
                 >
                   <div className="flex items-center gap-2 text-xs tracking-[0.15em] uppercase text-[var(--color-gold-500)] mb-4">

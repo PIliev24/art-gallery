@@ -29,7 +29,7 @@ function ArtworkDetailPage() {
   if (!artwork) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center">
-        <p className="font-serif text-2xl text-[var(--color-gallery-400)] mb-6">
+        <p className="font-serif text-2xl text-gallery-400 mb-6">
           Произведението не е намерено
         </p>
         <Button asChild variant="outline">
@@ -53,7 +53,7 @@ function ArtworkDetailPage() {
   return (
     <div>
       {/* Breadcrumb */}
-      <div className="bg-[var(--color-gallery-950)]">
+      <div className="bg-gallery-950`">
         <div className="mx-auto max-w-7xl px-6 py-4">
           <Link
             to="/collection"
@@ -66,7 +66,7 @@ function ArtworkDetailPage() {
       </div>
 
       {/* Main Content */}
-      <section className="bg-[var(--color-gallery-950)]">
+      <section className="bg-gallery-950`">
         <div className="mx-auto max-w-7xl px-6 pb-16 md:pb-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             {/* Image */}

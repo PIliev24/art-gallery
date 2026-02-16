@@ -17,6 +17,8 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as ExhibitionSlugRouteImport } from './routes/exhibition.$slug'
+import { Route as EventSlugRouteImport } from './routes/event.$slug'
 import { Route as ArtworkArtworkIdRouteImport } from './routes/artwork.$artworkId'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminExhibitionsIndexRouteImport } from './routes/admin/exhibitions/index'
@@ -68,6 +70,16 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRouteRoute,
+} as any)
+const ExhibitionSlugRoute = ExhibitionSlugRouteImport.update({
+  id: '/exhibition/$slug',
+  path: '/exhibition/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventSlugRoute = EventSlugRouteImport.update({
+  id: '/event/$slug',
+  path: '/event/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ArtworkArtworkIdRoute = ArtworkArtworkIdRouteImport.update({
   id: '/artwork/$artworkId',
@@ -135,6 +147,8 @@ export interface FileRoutesByFullPath {
   '/exhibitions': typeof ExhibitionsRoute
   '/admin/login': typeof AdminLoginRoute
   '/artwork/$artworkId': typeof ArtworkArtworkIdRoute
+  '/event/$slug': typeof EventSlugRoute
+  '/exhibition/$slug': typeof ExhibitionSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/artworks/$id': typeof AdminArtworksIdRoute
   '/admin/artworks/new': typeof AdminArtworksNewRoute
@@ -155,6 +169,8 @@ export interface FileRoutesByTo {
   '/exhibitions': typeof ExhibitionsRoute
   '/admin/login': typeof AdminLoginRoute
   '/artwork/$artworkId': typeof ArtworkArtworkIdRoute
+  '/event/$slug': typeof EventSlugRoute
+  '/exhibition/$slug': typeof ExhibitionSlugRoute
   '/admin': typeof AdminIndexRoute
   '/admin/artworks/$id': typeof AdminArtworksIdRoute
   '/admin/artworks/new': typeof AdminArtworksNewRoute
@@ -177,6 +193,8 @@ export interface FileRoutesById {
   '/exhibitions': typeof ExhibitionsRoute
   '/admin/login': typeof AdminLoginRoute
   '/artwork/$artworkId': typeof ArtworkArtworkIdRoute
+  '/event/$slug': typeof EventSlugRoute
+  '/exhibition/$slug': typeof ExhibitionSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/artworks/$id': typeof AdminArtworksIdRoute
   '/admin/artworks/new': typeof AdminArtworksNewRoute
@@ -200,6 +218,8 @@ export interface FileRouteTypes {
     | '/exhibitions'
     | '/admin/login'
     | '/artwork/$artworkId'
+    | '/event/$slug'
+    | '/exhibition/$slug'
     | '/admin/'
     | '/admin/artworks/$id'
     | '/admin/artworks/new'
@@ -220,6 +240,8 @@ export interface FileRouteTypes {
     | '/exhibitions'
     | '/admin/login'
     | '/artwork/$artworkId'
+    | '/event/$slug'
+    | '/exhibition/$slug'
     | '/admin'
     | '/admin/artworks/$id'
     | '/admin/artworks/new'
@@ -241,6 +263,8 @@ export interface FileRouteTypes {
     | '/exhibitions'
     | '/admin/login'
     | '/artwork/$artworkId'
+    | '/event/$slug'
+    | '/exhibition/$slug'
     | '/admin/'
     | '/admin/artworks/$id'
     | '/admin/artworks/new'
@@ -262,6 +286,8 @@ export interface RootRouteChildren {
   EventsRoute: typeof EventsRoute
   ExhibitionsRoute: typeof ExhibitionsRoute
   ArtworkArtworkIdRoute: typeof ArtworkArtworkIdRoute
+  EventSlugRoute: typeof EventSlugRoute
+  ExhibitionSlugRoute: typeof ExhibitionSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -321,6 +347,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRouteRoute
+    }
+    '/exhibition/$slug': {
+      id: '/exhibition/$slug'
+      path: '/exhibition/$slug'
+      fullPath: '/exhibition/$slug'
+      preLoaderRoute: typeof ExhibitionSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/event/$slug': {
+      id: '/event/$slug'
+      path: '/event/$slug'
+      fullPath: '/event/$slug'
+      preLoaderRoute: typeof EventSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/artwork/$artworkId': {
       id: '/artwork/$artworkId'
@@ -443,6 +483,8 @@ const rootRouteChildren: RootRouteChildren = {
   EventsRoute: EventsRoute,
   ExhibitionsRoute: ExhibitionsRoute,
   ArtworkArtworkIdRoute: ArtworkArtworkIdRoute,
+  EventSlugRoute: EventSlugRoute,
+  ExhibitionSlugRoute: ExhibitionSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -113,7 +113,9 @@ function ExhibitionsPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
               {current.map((ex) => (
-                <ExhibitionCard key={ex.id} exhibition={ex} />
+                <Link key={ex.id} to="/exhibition/$slug" params={{ slug: ex.slug }}>
+                  <ExhibitionCard exhibition={ex} />
+                </Link>
               ))}
             </div>
           </div>
@@ -133,7 +135,9 @@ function ExhibitionsPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
               {upcoming.map((ex) => (
-                <ExhibitionCard key={ex.id} exhibition={ex} />
+                <Link key={ex.id} to="/exhibition/$slug" params={{ slug: ex.slug }}>
+                  <ExhibitionCard exhibition={ex} />
+                </Link>
               ))}
             </div>
           </div>
@@ -153,7 +157,9 @@ function ExhibitionsPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {past.map((ex) => (
-                <ExhibitionCard key={ex.id} exhibition={ex} />
+                <Link key={ex.id} to="/exhibition/$slug" params={{ slug: ex.slug }}>
+                  <ExhibitionCard exhibition={ex} />
+                </Link>
               ))}
             </div>
           </div>
