@@ -31,6 +31,18 @@ function HomePage() {
 
         <div className="mx-auto max-w-7xl px-6 py-32 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="hidden lg:flex items-center justify-center animate-fade-in delay-300">
+              <div className="relative p-3 border border-[var(--color-gold-500)]/20">
+                <img
+                  src="/gallery-logo.jpg"
+                  alt="Галерия Савчеви"
+                  className="w-full max-w-md object-contain"
+                />
+                <div className="absolute -bottom-3 -right-3 w-16 h-16 border border-[var(--color-gold-500)]/15" />
+                <div className="absolute -top-3 -left-3 w-16 h-16 border border-[var(--color-gold-500)]/15" />
+              </div>
+            </div>
+
             <div>
               <div className="animate-fade-up">
                 <p className="text-xs tracking-[0.3em] uppercase text-[var(--color-gold-500)] mb-8">
@@ -61,18 +73,6 @@ function HomePage() {
                 <Button asChild variant="outline-light" size="lg">
                   <Link to="/exhibitions">Текущи изложби</Link>
                 </Button>
-              </div>
-            </div>
-
-            <div className="hidden lg:flex items-center justify-center animate-fade-in delay-300">
-              <div className="relative p-3 border border-[var(--color-gold-500)]/20">
-                <img
-                  src="/gallery-logo.jpg"
-                  alt="Галерия Савчеви"
-                  className="w-full max-w-md object-contain"
-                />
-                <div className="absolute -bottom-3 -right-3 w-16 h-16 border border-[var(--color-gold-500)]/15" />
-                <div className="absolute -top-3 -left-3 w-16 h-16 border border-[var(--color-gold-500)]/15" />
               </div>
             </div>
           </div>
