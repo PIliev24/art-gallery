@@ -23,12 +23,7 @@ function HomePage() {
     <div className="flex flex-col">
       {/* Hero */}
       <section className="relative min-h-[90vh] bg-[var(--color-gallery-950)] grain overflow-hidden flex items-center">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-1/2 h-full opacity-[0.07]">
-          <div className="absolute inset-0 bg-gradient-to-l from-[var(--color-gold-500)] to-transparent" />
-        </div>
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--color-gold-500)]/30 to-transparent" />
-
+      
         <div className="mx-auto max-w-7xl px-6 py-32 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="hidden lg:flex items-center justify-center animate-fade-in delay-300">
