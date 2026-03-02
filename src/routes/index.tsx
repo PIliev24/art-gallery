@@ -30,36 +30,50 @@ function HomePage() {
         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--color-gold-500)]/30 to-transparent" />
 
         <div className="mx-auto max-w-7xl px-6 py-32 w-full">
-          <div className="max-w-3xl">
-            <div className="animate-fade-up">
-              <p className="text-xs tracking-[0.3em] uppercase text-[var(--color-gold-500)] mb-8">
-                Оряхово &middot; от 1994
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="animate-fade-up">
+                <p className="text-xs tracking-[0.3em] uppercase text-[var(--color-gold-500)] mb-8">
+                  Оряхово &middot; от 1994
+                </p>
+              </div>
+
+              <h1 className="animate-fade-up delay-100">
+                <span className="block font-serif text-5xl md:text-7xl lg:text-8xl font-light text-[var(--color-gallery-100)] leading-[0.95]">
+                  Галерия
+                </span>
+                <span className="block font-serif text-5xl md:text-7xl lg:text-8xl font-medium text-[var(--color-gold-400)] leading-[0.95] mt-2">
+                  Савчеви
+                </span>
+              </h1>
+
+              <div className="animate-gold-line delay-300 mt-10 mb-8 w-24 h-px bg-[var(--color-gold-500)]" />
+
+              <p className="animate-fade-up delay-400 text-lg md:text-xl text-[var(--color-gallery-400)] leading-relaxed max-w-xl font-light">
+                Трето десетилетие изкуство и култура. Пространство, където
+                традицията среща съвременността в сърцето на Северозападна България.
               </p>
+
+              <div className="animate-fade-up delay-500 flex flex-wrap gap-4 mt-12">
+                <Button asChild variant="gold" size="lg">
+                  <Link to="/collection">Разгледай колекцията</Link>
+                </Button>
+                <Button asChild variant="outline-light" size="lg">
+                  <Link to="/exhibitions">Текущи изложби</Link>
+                </Button>
+              </div>
             </div>
 
-            <h1 className="animate-fade-up delay-100">
-              <span className="block font-serif text-5xl md:text-7xl lg:text-8xl font-light text-[var(--color-gallery-100)] leading-[0.95]">
-                Галерия
-              </span>
-              <span className="block font-serif text-5xl md:text-7xl lg:text-8xl font-medium text-[var(--color-gold-400)] leading-[0.95] mt-2">
-                Савчеви
-              </span>
-            </h1>
-
-            <div className="animate-gold-line delay-300 mt-10 mb-8 w-24 h-px bg-[var(--color-gold-500)]" />
-
-            <p className="animate-fade-up delay-400 text-lg md:text-xl text-[var(--color-gallery-400)] leading-relaxed max-w-xl font-light">
-              Трето десетилетие изкуство и култура. Пространство, където
-              традицията среща съвременността в сърцето на Северозападна България.
-            </p>
-
-            <div className="animate-fade-up delay-500 flex flex-wrap gap-4 mt-12">
-              <Button asChild variant="gold" size="lg">
-                <Link to="/collection">Разгледай колекцията</Link>
-              </Button>
-              <Button asChild variant="outline-light" size="lg">
-                <Link to="/exhibitions">Текущи изложби</Link>
-              </Button>
+            <div className="hidden lg:flex items-center justify-center animate-fade-in delay-300">
+              <div className="relative p-3 border border-[var(--color-gold-500)]/20">
+                <img
+                  src="/gallery-logo.jpg"
+                  alt="Галерия Савчеви"
+                  className="w-full max-w-md object-contain"
+                />
+                <div className="absolute -bottom-3 -right-3 w-16 h-16 border border-[var(--color-gold-500)]/15" />
+                <div className="absolute -top-3 -left-3 w-16 h-16 border border-[var(--color-gold-500)]/15" />
+              </div>
             </div>
           </div>
         </div>

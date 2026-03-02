@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { api } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { ImageUpload } from '@/components/image-upload';
 import { ArtCategory } from '@/types/enums';
 
 interface ArtistOption {
@@ -128,8 +129,8 @@ function AdminArtworkNew() {
           <Input type="number" value={form.year} onChange={e => setForm({ ...form, year: e.target.value })} required className="text-[var(--color-gallery-100)] border-[var(--color-gallery-700)]" />
         </Field>
 
-        <Field label="URL на изображение">
-          <Input value={form.imageUrl} onChange={e => setForm({ ...form, imageUrl: e.target.value })} required className="text-[var(--color-gallery-100)] border-[var(--color-gallery-700)]" />
+        <Field label="Изображение">
+          <ImageUpload value={form.imageUrl} onChange={(url) => setForm({ ...form, imageUrl: url })} required />
         </Field>
 
         <Field label="Описание">

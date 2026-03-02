@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { api } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { ImageUpload } from '@/components/image-upload';
 import { ExhibitionStatus } from '@/types/enums';
 
 interface ArtistOption {
@@ -128,8 +129,8 @@ function AdminExhibitionEdit() {
           </select>
         </Field>
 
-        <Field label="URL на корица">
-          <Input value={form.coverImage} onChange={e => setForm({ ...form, coverImage: e.target.value })} required className="text-[var(--color-gallery-100)] border-[var(--color-gallery-700)]" />
+        <Field label="Корица">
+          <ImageUpload value={form.coverImage} onChange={(url) => setForm({ ...form, coverImage: url })} required />
         </Field>
 
         <Field label="Локация">
