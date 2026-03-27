@@ -6,15 +6,10 @@ import { Input } from '@/components/ui/input';
 import { ImageUpload } from '@/components/image-upload';
 import { ArtCategory } from '@/types/enums';
 
-interface ArtistOption {
-  id: string;
-  name: string;
-}
-
 interface ArtworkDetail {
   id: string;
   title: string;
-  artistId: string;
+  artistName: string;
   category: string;
   medium: string;
   dimensions: { width: number; height: number; depth?: number; unit: string };
@@ -37,22 +32,19 @@ const categoryOptions = [
 export const Route = createFileRoute('/admin/artworks/$id')({
   component: AdminArtworkEdit,
   loader: async ({ params }) => {
-    const [artwork, artists] = await Promise.all([
-      api<ArtworkDetail>(`/artworks/${params.id}`),
-      api<ArtistOption[]>('/artists'),
-    ]);
-    return { artwork, artists };
+    const artwork = await api<ArtworkDetail>(`/artworks/${params.id}`);
+    return { artwork };
   },
 });
 
 function AdminArtworkEdit() {
-  const { artwork, artists } = Route.useLoaderData();
+  const { artwork } = Route.useLoaderData();
   const navigate = useNavigate();
   const [saving, setSaving] = useState(false);
 
   const [form, setForm] = useState({
     title: artwork.title,
-    artistId: artwork.artistId,
+    artistName: artwork.artistName,
     category: artwork.category,
     medium: artwork.medium,
     width: String(artwork.dimensions.width),
@@ -74,7 +66,7 @@ function AdminArtworkEdit() {
         method: 'PUT',
         body: JSON.stringify({
           title: form.title,
-          artistId: form.artistId,
+          artistName: form.artistName,
           category: form.category,
           medium: form.medium,
           dimensions: {
@@ -108,9 +100,7 @@ function AdminArtworkEdit() {
         </Field>
 
         <Field label="Художник">
-          <select value={form.artistId} onChange={e => setForm({ ...form, artistId: e.target.value })} className="w-full bg-transparent border-b border-[var(--color-gallery-700)] py-2 text-sm text-[var(--color-gallery-100)] focus:border-[var(--color-gold-500)] focus:outline-none">
-            {artists.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
-          </select>
+          <Input value={form.artistName} onChange={e => setForm({ ...form, artistName: e.target.value })} required className="text-[var(--color-gallery-100)] border-[var(--color-gallery-700)]" />
         </Field>
 
         <Field label="Категория">

@@ -6,11 +6,6 @@ import { Input } from '@/components/ui/input';
 import { ImageUpload } from '@/components/image-upload';
 import { ArtCategory } from '@/types/enums';
 
-interface ArtistOption {
-  id: string;
-  name: string;
-}
-
 const categoryOptions = [
   { value: ArtCategory.PAINTINGS, label: 'Живопис' },
   { value: ArtCategory.MODERN_ART, label: 'Модерно изкуство' },
@@ -22,20 +17,16 @@ const categoryOptions = [
 
 export const Route = createFileRoute('/admin/artworks/new')({
   component: AdminArtworkNew,
-  loader: async () => {
-    const artists = await api<ArtistOption[]>('/artists');
-    return { artists };
-  },
+  loader: async () => ({}),
 });
 
 function AdminArtworkNew() {
-  const { artists } = Route.useLoaderData();
   const navigate = useNavigate();
   const [saving, setSaving] = useState(false);
 
   const [form, setForm] = useState({
     title: '',
-    artistId: artists[0]?.id || '',
+    artistName: '',
     category: ArtCategory.PAINTINGS as string,
     medium: '',
     width: '',
@@ -57,7 +48,7 @@ function AdminArtworkNew() {
         method: 'POST',
         body: JSON.stringify({
           title: form.title,
-          artistId: form.artistId,
+          artistName: form.artistName,
           category: form.category,
           medium: form.medium,
           dimensions: {
@@ -91,9 +82,7 @@ function AdminArtworkNew() {
         </Field>
 
         <Field label="Художник">
-          <select value={form.artistId} onChange={e => setForm({ ...form, artistId: e.target.value })} className="w-full bg-transparent border-b border-[var(--color-gallery-700)] py-2 text-sm text-[var(--color-gallery-100)] focus:border-[var(--color-gold-500)] focus:outline-none">
-            {artists.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
-          </select>
+          <Input value={form.artistName} onChange={e => setForm({ ...form, artistName: e.target.value })} required className="text-[var(--color-gallery-100)] border-[var(--color-gallery-700)]" />
         </Field>
 
         <Field label="Категория">

@@ -67,9 +67,9 @@ function ExhibitionCard({ exhibition }: { exhibition: Exhibition }) {
         <p className="text-sm text-[var(--color-gallery-600)] leading-relaxed line-clamp-2">
           {exhibition.description}
         </p>
-        {exhibition.artists.length > 0 && (
+        {exhibition.artistNames.length > 0 && (
           <p className="mt-3 text-xs text-[var(--color-gallery-400)]">
-            {exhibition.artists.map(a => a.name).join(', ')}
+            {exhibition.artistNames.join(', ')}
           </p>
         )}
         <div className="mt-4 h-px bg-gradient-to-r from-[var(--color-gold-500)]/40 to-transparent w-0 group-hover:w-full transition-all duration-700" />

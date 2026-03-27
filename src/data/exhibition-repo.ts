@@ -12,7 +12,7 @@ interface ExhibitionApiRow {
   coverImage: string;
   location: string | null;
   isFeatured: boolean;
-  artists: { id: string; name: string; bio: string | null; nationality: string | null }[];
+  artistNames: string[] | null;
 }
 
 function toExhibition(row: ExhibitionApiRow): Exhibition {
@@ -25,12 +25,7 @@ function toExhibition(row: ExhibitionApiRow): Exhibition {
     endDate: new Date(row.endDate),
     status: row.status as Exhibition['status'],
     coverImage: row.coverImage,
-    artists: row.artists.map(a => ({
-      id: a.id,
-      name: a.name,
-      bio: a.bio ?? undefined,
-      nationality: a.nationality ?? undefined,
-    })),
+    artistNames: row.artistNames ?? [],
     location: row.location ?? undefined,
     isFeatured: row.isFeatured,
   };

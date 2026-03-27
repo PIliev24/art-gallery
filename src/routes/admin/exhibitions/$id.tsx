@@ -4,12 +4,8 @@ import { api } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ImageUpload } from '@/components/image-upload';
+import { Plus, X } from 'lucide-react';
 import { ExhibitionStatus } from '@/types/enums';
-
-interface ArtistOption {
-  id: string;
-  name: string;
-}
 
 interface ExhibitionDetail {
   id: string;
@@ -22,7 +18,7 @@ interface ExhibitionDetail {
   coverImage: string;
   location: string | null;
   isFeatured: boolean;
-  artists: ArtistOption[];
+  artistNames: string[];
 }
 
 const statusOptions = [
@@ -38,16 +34,13 @@ function toDateInput(iso: string): string {
 export const Route = createFileRoute('/admin/exhibitions/$id')({
   component: AdminExhibitionEdit,
   loader: async ({ params }) => {
-    const [exhibition, artists] = await Promise.all([
-      api<ExhibitionDetail>(`/exhibitions/${params.id}`),
-      api<ArtistOption[]>('/artists'),
-    ]);
-    return { exhibition, artists };
+    const exhibition = await api<ExhibitionDetail>(`/exhibitions/${params.id}`);
+    return { exhibition };
   },
 });
 
 function AdminExhibitionEdit() {
-  const { exhibition, artists } = Route.useLoaderData();
+  const { exhibition } = Route.useLoaderData();
   const navigate = useNavigate();
   const [saving, setSaving] = useState(false);
 
@@ -61,17 +54,8 @@ function AdminExhibitionEdit() {
     coverImage: exhibition.coverImage,
     location: exhibition.location || '',
     isFeatured: exhibition.isFeatured,
-    artistIds: exhibition.artists.map(a => a.id),
+    artistNames: exhibition.artistNames.length > 0 ? [...exhibition.artistNames] : [''],
   });
-
-  function handleArtistToggle(id: string) {
-    setForm(f => ({
-      ...f,
-      artistIds: f.artistIds.includes(id)
-        ? f.artistIds.filter(a => a !== id)
-        : [...f.artistIds, id],
-    }));
-  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -80,8 +64,16 @@ function AdminExhibitionEdit() {
       await api(`/exhibitions/${exhibition.id}`, {
         method: 'PUT',
         body: JSON.stringify({
-          ...form,
+          title: form.title,
+          slug: form.slug,
+          description: form.description,
+          startDate: form.startDate,
+          endDate: form.endDate,
+          status: form.status,
+          coverImage: form.coverImage,
           location: form.location || undefined,
+          isFeatured: form.isFeatured,
+          artistNames: form.artistNames.filter(n => n.trim()),
         }),
       });
       navigate({ to: '/admin/exhibitions' });
@@ -139,12 +131,37 @@ function AdminExhibitionEdit() {
 
         <Field label="Художници">
           <div className="space-y-2 mt-1">
-            {artists.map(a => (
-              <label key={a.id} className="flex items-center gap-2 text-sm text-[var(--color-gallery-300)] cursor-pointer">
-                <input type="checkbox" checked={form.artistIds.includes(a.id)} onChange={() => handleArtistToggle(a.id)} className="accent-[var(--color-gold-500)]" />
-                {a.name}
-              </label>
+            {form.artistNames.map((name, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <Input
+                  value={name}
+                  onChange={e => {
+                    const next = [...form.artistNames];
+                    next[i] = e.target.value;
+                    setForm({ ...form, artistNames: next });
+                  }}
+                  placeholder="Име на художник"
+                  className="text-[var(--color-gallery-100)] border-[var(--color-gallery-700)]"
+                />
+                {form.artistNames.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => setForm({ ...form, artistNames: form.artistNames.filter((_, j) => j !== i) })}
+                    className="p-1.5 text-[var(--color-gallery-400)] hover:text-red-400 transition-colors"
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
             ))}
+            <button
+              type="button"
+              onClick={() => setForm({ ...form, artistNames: [...form.artistNames, ''] })}
+              className="flex items-center gap-1.5 text-xs text-[var(--color-gold-500)] hover:text-[var(--color-gold-400)] transition-colors mt-2"
+            >
+              <Plus size={14} />
+              <span>Добави художник</span>
+            </button>
           </div>
         </Field>
 

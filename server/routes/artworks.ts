@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { eq } from 'drizzle-orm';
 import { db } from '../db';
-import { artworks, artists } from '../db/schema';
+import { artworks } from '../db/schema';
 import { requireAuth } from '../middleware/auth';
 
 const artworksRouter = new Hono();
@@ -11,30 +11,7 @@ artworksRouter.get('/', async (c) => {
   const category = c.req.query('category');
   const featured = c.req.query('featured');
 
-  const allArtworks = await db.select({
-    id: artworks.id,
-    title: artworks.title,
-    artistId: artworks.artistId,
-    category: artworks.category,
-    medium: artworks.medium,
-    dimensions: artworks.dimensions,
-    year: artworks.year,
-    imageUrl: artworks.imageUrl,
-    description: artworks.description,
-    isFeatured: artworks.isFeatured,
-    isAvailable: artworks.isAvailable,
-    createdAt: artworks.createdAt,
-    updatedAt: artworks.updatedAt,
-    artist: {
-      id: artists.id,
-      name: artists.name,
-      bio: artists.bio,
-      nationality: artists.nationality,
-    },
-  })
-    .from(artworks)
-    .innerJoin(artists, eq(artworks.artistId, artists.id))
-    .orderBy(artworks.createdAt);
+  const allArtworks = await db.select().from(artworks).orderBy(artworks.createdAt);
 
   let result = allArtworks;
 
@@ -51,31 +28,7 @@ artworksRouter.get('/', async (c) => {
 // Public: GET single artwork
 artworksRouter.get('/:id', async (c) => {
   const id = c.req.param('id');
-  const [artwork] = await db.select({
-    id: artworks.id,
-    title: artworks.title,
-    artistId: artworks.artistId,
-    category: artworks.category,
-    medium: artworks.medium,
-    dimensions: artworks.dimensions,
-    year: artworks.year,
-    imageUrl: artworks.imageUrl,
-    description: artworks.description,
-    isFeatured: artworks.isFeatured,
-    isAvailable: artworks.isAvailable,
-    createdAt: artworks.createdAt,
-    updatedAt: artworks.updatedAt,
-    artist: {
-      id: artists.id,
-      name: artists.name,
-      bio: artists.bio,
-      nationality: artists.nationality,
-    },
-  })
-    .from(artworks)
-    .innerJoin(artists, eq(artworks.artistId, artists.id))
-    .where(eq(artworks.id, id))
-    .limit(1);
+  const [artwork] = await db.select().from(artworks).where(eq(artworks.id, id)).limit(1);
 
   if (!artwork) {
     return c.json({ error: 'Not found' }, 404);
@@ -89,7 +42,7 @@ artworksRouter.post('/', requireAuth, async (c) => {
   const body = await c.req.json();
   const [created] = await db.insert(artworks).values({
     title: body.title,
-    artistId: body.artistId,
+    artistName: body.artistName,
     category: body.category,
     medium: body.medium,
     dimensions: body.dimensions,
@@ -110,7 +63,7 @@ artworksRouter.put('/:id', requireAuth, async (c) => {
   const [updated] = await db.update(artworks)
     .set({
       title: body.title,
-      artistId: body.artistId,
+      artistName: body.artistName,
       category: body.category,
       medium: body.medium,
       dimensions: body.dimensions,

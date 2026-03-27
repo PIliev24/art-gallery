@@ -11,7 +11,7 @@ interface ArtworkRow {
   year: number;
   isFeatured: boolean;
   isAvailable: boolean;
-  artist: { id: string; name: string };
+  artistName: string;
 }
 
 export const Route = createFileRoute('/admin/artworks/')({
@@ -69,7 +69,7 @@ function AdminArtworksList() {
             {artworks.map((artwork) => (
               <tr key={artwork.id} className="border-b border-[var(--color-gallery-800)] hover:bg-[var(--color-gallery-800)]/30">
                 <td className="py-3 px-4 text-[var(--color-gallery-200)]">{artwork.title}</td>
-                <td className="py-3 px-4 text-[var(--color-gallery-400)]">{artwork.artist.name}</td>
+                <td className="py-3 px-4 text-[var(--color-gallery-400)]">{artwork.artistName}</td>
                 <td className="py-3 px-4 text-[var(--color-gallery-400)]">{categoryLabels[artwork.category] || artwork.category}</td>
                 <td className="py-3 px-4 text-[var(--color-gallery-400)]">{artwork.year}</td>
                 <td className="py-3 px-4 text-[var(--color-gallery-400)]">{artwork.isFeatured ? 'Да' : ''}</td>

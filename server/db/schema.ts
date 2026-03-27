@@ -1,17 +1,9 @@
-import { pgTable, text, integer, boolean, timestamp, jsonb, primaryKey, uuid } from 'drizzle-orm/pg-core';
-
-export const artists = pgTable('artists', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  name: text('name').notNull(),
-  bio: text('bio'),
-  nationality: text('nationality'),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-});
+import { pgTable, text, integer, boolean, timestamp, jsonb, uuid } from 'drizzle-orm/pg-core';
 
 export const artworks = pgTable('artworks', {
   id: uuid('id').defaultRandom().primaryKey(),
   title: text('title').notNull(),
-  artistId: uuid('artist_id').notNull().references(() => artists.id),
+  artistName: text('artist_name').notNull(),
   category: text('category').notNull(),
   medium: text('medium').notNull(),
   dimensions: jsonb('dimensions').notNull().$type<{ width: number; height: number; depth?: number; unit: string }>(),
@@ -34,17 +26,11 @@ export const exhibitions = pgTable('exhibitions', {
   status: text('status').notNull(),
   coverImage: text('cover_image').notNull(),
   location: text('location'),
+  artistNames: text('artist_names'),
   isFeatured: boolean('is_featured').default(false).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
-
-export const exhibitionArtists = pgTable('exhibition_artists', {
-  exhibitionId: uuid('exhibition_id').notNull().references(() => exhibitions.id, { onDelete: 'cascade' }),
-  artistId: uuid('artist_id').notNull().references(() => artists.id, { onDelete: 'cascade' }),
-}, (t) => [
-  primaryKey({ columns: [t.exhibitionId, t.artistId] }),
-]);
 
 export const events = pgTable('events', {
   id: uuid('id').defaultRandom().primaryKey(),

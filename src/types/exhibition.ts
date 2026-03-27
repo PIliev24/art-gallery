@@ -1,5 +1,4 @@
 import type { ExhibitionStatus } from './enums';
-import type { Artist } from './artwork';
 
 export interface Exhibition {
   id: string;
@@ -10,7 +9,7 @@ export interface Exhibition {
   endDate: Date;
   status: ExhibitionStatus;
   coverImage: string;
-  artists: Artist[];
+  artistNames: string[];
   location?: string;
   isFeatured?: boolean;
 }

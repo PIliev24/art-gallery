@@ -4,7 +4,7 @@ import { api } from '../lib/api';
 interface ArtworkApiRow {
   id: string;
   title: string;
-  artistId: string;
+  artistName: string;
   category: string;
   medium: string;
   dimensions: { width: number; height: number; depth?: number; unit: string };
@@ -13,19 +13,13 @@ interface ArtworkApiRow {
   description: string | null;
   isFeatured: boolean;
   isAvailable: boolean;
-  artist: { id: string; name: string; bio: string | null; nationality: string | null };
 }
 
 function toArtwork(row: ArtworkApiRow): Artwork {
   return {
     id: row.id,
     title: row.title,
-    artist: {
-      id: row.artist.id,
-      name: row.artist.name,
-      bio: row.artist.bio ?? undefined,
-      nationality: row.artist.nationality ?? undefined,
-    },
+    artistName: row.artistName,
     category: row.category as ArtCategory,
     medium: row.medium,
     dimensions: row.dimensions as Artwork['dimensions'],

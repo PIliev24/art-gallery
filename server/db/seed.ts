@@ -4,8 +4,7 @@ import { hash } from 'bcryptjs';
 import { config } from '../config';
 import * as schema from './schema';
 
-// Import hardcoded seed data
-import { artists as seedArtists, artworks as seedArtworks, exhibitions as seedExhibitions, events as seedEvents } from '../../src/data/hardcoded-data';
+import { artworks as seedArtworks, exhibitions as seedExhibitions, events as seedEvents } from '../../src/data/hardcoded-data';
 
 async function seed() {
   const client = postgres(config.databaseUrl, { max: 1 });
@@ -21,25 +20,11 @@ async function seed() {
   }).onConflictDoNothing();
   console.log(`Admin user "${config.adminUsername}" created.`);
 
-  // Insert artists — we need to map old IDs to new UUIDs
-  const artistIdMap = new Map<string, string>();
-  for (const artist of seedArtists) {
-    const [inserted] = await db.insert(schema.artists).values({
-      name: artist.name,
-      bio: artist.bio,
-      nationality: artist.nationality,
-    }).returning({ id: schema.artists.id });
-    artistIdMap.set(artist.id, inserted.id);
-  }
-  console.log(`Inserted ${seedArtists.length} artists.`);
-
   // Insert artworks
   for (const artwork of seedArtworks) {
-    const artistId = artistIdMap.get(artwork.artist.id);
-    if (!artistId) continue;
     await db.insert(schema.artworks).values({
       title: artwork.title,
-      artistId,
+      artistName: artwork.artistName,
       category: artwork.category,
       medium: artwork.medium,
       dimensions: artwork.dimensions,
@@ -53,9 +38,8 @@ async function seed() {
   console.log(`Inserted ${seedArtworks.length} artworks.`);
 
   // Insert exhibitions
-  const exhibitionIdMap = new Map<string, string>();
   for (const exhibition of seedExhibitions) {
-    const [inserted] = await db.insert(schema.exhibitions).values({
+    await db.insert(schema.exhibitions).values({
       title: exhibition.title,
       slug: exhibition.slug,
       description: exhibition.description,
@@ -64,19 +48,9 @@ async function seed() {
       status: exhibition.status,
       coverImage: exhibition.coverImage,
       location: exhibition.location,
+      artistNames: JSON.stringify(exhibition.artistNames),
       isFeatured: exhibition.isFeatured ?? false,
-    }).returning({ id: schema.exhibitions.id });
-    exhibitionIdMap.set(exhibition.id, inserted.id);
-
-    // Insert exhibition artists
-    for (const artist of exhibition.artists) {
-      const artistId = artistIdMap.get(artist.id);
-      if (!artistId) continue;
-      await db.insert(schema.exhibitionArtists).values({
-        exhibitionId: inserted.id,
-        artistId,
-      });
-    }
+    });
   }
   console.log(`Inserted ${seedExhibitions.length} exhibitions.`);
 

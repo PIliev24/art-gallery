@@ -7,17 +7,10 @@ export interface Dimensions {
   unit: 'cm' | 'm' | 'mm';
 }
 
-export interface Artist {
-  id: string;
-  name: string;
-  bio?: string;
-  nationality?: string;
-}
-
 export interface Artwork {
   id: string;
   title: string;
-  artist: Artist;
+  artistName: string;
   category: ArtCategory;
   medium: string;
   dimensions: Dimensions;

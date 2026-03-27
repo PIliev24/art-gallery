@@ -15,7 +15,6 @@ import authRoutes from './routes/auth';
 import artworksRoutes from './routes/artworks';
 import exhibitionsRoutes from './routes/exhibitions';
 import eventsRoutes from './routes/events';
-import artistsRoutes from './routes/artists';
 import uploadRoutes from './routes/upload';
 import filesRoutes from './routes/files';
 
@@ -34,7 +33,6 @@ app.route('/api/auth', authRoutes);
 app.route('/api/artworks', artworksRoutes);
 app.route('/api/exhibitions', exhibitionsRoutes);
 app.route('/api/events', eventsRoutes);
-app.route('/api/artists', artistsRoutes);
 app.route('/api/upload', uploadRoutes);
 app.route('/api/files', filesRoutes);
 

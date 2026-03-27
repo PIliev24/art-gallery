@@ -1,23 +1,25 @@
 import { Hono } from 'hono';
 import { eq } from 'drizzle-orm';
 import { db } from '../db';
-import { exhibitions, exhibitionArtists, artists } from '../db/schema';
+import { exhibitions } from '../db/schema';
 import { requireAuth } from '../middleware/auth';
 
 const exhibitionsRouter = new Hono();
 
-// Helper: fetch exhibition artists
-async function getExhibitionArtists(exhibitionId: string) {
-  const rows = await db.select({
-    id: artists.id,
-    name: artists.name,
-    bio: artists.bio,
-    nationality: artists.nationality,
-  })
-    .from(exhibitionArtists)
-    .innerJoin(artists, eq(exhibitionArtists.artistId, artists.id))
-    .where(eq(exhibitionArtists.exhibitionId, exhibitionId));
-  return rows;
+// Helper: parse artistNames JSON string to array
+function parseArtistNames(raw: string | null): string[] {
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+// Helper: attach parsed artistNames to exhibition
+function withArtistNames<T extends { artistNames: string | null }>(ex: T) {
+  return { ...ex, artistNames: parseArtistNames(ex.artistNames) };
 }
 
 // Public: GET all exhibitions
@@ -35,15 +37,7 @@ exhibitionsRouter.get('/', async (c) => {
     result = result.filter(e => e.isFeatured);
   }
 
-  // Attach artists to each exhibition
-  const withArtists = await Promise.all(
-    result.map(async (ex) => ({
-      ...ex,
-      artists: await getExhibitionArtists(ex.id),
-    }))
-  );
-
-  return c.json(withArtists);
+  return c.json(result.map(withArtistNames));
 });
 
 // Public: GET exhibition by slug
@@ -55,10 +49,7 @@ exhibitionsRouter.get('/slug/:slug', async (c) => {
     return c.json({ error: 'Not found' }, 404);
   }
 
-  return c.json({
-    ...exhibition,
-    artists: await getExhibitionArtists(exhibition.id),
-  });
+  return c.json(withArtistNames(exhibition));
 });
 
 // Public: GET exhibition by ID
@@ -70,15 +61,14 @@ exhibitionsRouter.get('/:id', async (c) => {
     return c.json({ error: 'Not found' }, 404);
   }
 
-  return c.json({
-    ...exhibition,
-    artists: await getExhibitionArtists(exhibition.id),
-  });
+  return c.json(withArtistNames(exhibition));
 });
 
 // Admin: Create exhibition
 exhibitionsRouter.post('/', requireAuth, async (c) => {
   const body = await c.req.json();
+  const artistNames = Array.isArray(body.artistNames) ? JSON.stringify(body.artistNames) : null;
+
   const [created] = await db.insert(exhibitions).values({
     title: body.title,
     slug: body.slug,
@@ -88,29 +78,19 @@ exhibitionsRouter.post('/', requireAuth, async (c) => {
     status: body.status,
     coverImage: body.coverImage,
     location: body.location,
+    artistNames,
     isFeatured: body.isFeatured ?? false,
   }).returning();
 
-  // Insert exhibition artists
-  if (body.artistIds?.length) {
-    await db.insert(exhibitionArtists).values(
-      body.artistIds.map((artistId: string) => ({
-        exhibitionId: created.id,
-        artistId,
-      }))
-    );
-  }
-
-  return c.json({
-    ...created,
-    artists: await getExhibitionArtists(created.id),
-  }, 201);
+  return c.json(withArtistNames(created), 201);
 });
 
 // Admin: Update exhibition
 exhibitionsRouter.put('/:id', requireAuth, async (c) => {
   const id = c.req.param('id');
   const body = await c.req.json();
+  const artistNames = Array.isArray(body.artistNames) ? JSON.stringify(body.artistNames) : null;
+
   const [updated] = await db.update(exhibitions)
     .set({
       title: body.title,
@@ -121,6 +101,7 @@ exhibitionsRouter.put('/:id', requireAuth, async (c) => {
       status: body.status,
       coverImage: body.coverImage,
       location: body.location,
+      artistNames,
       isFeatured: body.isFeatured,
       updatedAt: new Date(),
     })
@@ -131,21 +112,7 @@ exhibitionsRouter.put('/:id', requireAuth, async (c) => {
     return c.json({ error: 'Not found' }, 404);
   }
 
-  // Replace exhibition artists
-  await db.delete(exhibitionArtists).where(eq(exhibitionArtists.exhibitionId, id));
-  if (body.artistIds?.length) {
-    await db.insert(exhibitionArtists).values(
-      body.artistIds.map((artistId: string) => ({
-        exhibitionId: id,
-        artistId,
-      }))
-    );
-  }
-
-  return c.json({
-    ...updated,
-    artists: await getExhibitionArtists(id),
-  });
+  return c.json(withArtistNames(updated));
 });
 
 // Admin: Delete exhibition

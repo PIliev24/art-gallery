@@ -1,19 +1,11 @@
-import type { Artist, Artwork, Exhibition, Event } from '../types';
+import type { Artwork, Exhibition, Event } from '../types';
 import { ArtCategory, ExhibitionStatus, EventStatus } from '../types/enums';
-
-export const artists: Artist[] = [
-  { id: '1', name: 'Нейчо Савчев', bio: 'Основател на Галерия Савчеви. Меценат и покровител на изкуствата в Оряхово и региона вече повече от три десетилетия.' },
-  { id: '2', name: 'Иван Иванов', bio: 'Съвременен български художник, майстор на пейзажната живопис.' },
-  { id: '3', name: 'Мария Петрова', bio: 'Художник-скулптор с авторски стил, съчетаващ класика и модерност.' },
-  { id: '4', name: 'Димитър Георгиев', bio: 'Фотограф и график, работещ в пресечната точка между технология и традиция.' },
-  { id: '5', name: 'Елена Христова', bio: 'Млада художничка, изследваща абстрактните форми на българската природа.' },
-];
 
 export const artworks: Artwork[] = [
   {
     id: '1',
     title: 'Пейзаж от Оряхово',
-    artist: artists[1],
+    artistName: 'Иван Иванов',
     category: ArtCategory.PAINTINGS,
     medium: 'Маслени бои върху платно',
     dimensions: { width: 80, height: 60, unit: 'cm' },
@@ -26,7 +18,7 @@ export const artworks: Artwork[] = [
   {
     id: '2',
     title: 'Абстрактна композиция',
-    artist: artists[0],
+    artistName: 'Нейчо Савчев',
     category: ArtCategory.MODERN_ART,
     medium: 'Акрил върху платно',
     dimensions: { width: 120, height: 120, unit: 'cm' },
@@ -39,7 +31,7 @@ export const artworks: Artwork[] = [
   {
     id: '3',
     title: 'Скулптура „Свобода"',
-    artist: artists[2],
+    artistName: 'Мария Петрова',
     category: ArtCategory.SCULPTURE,
     medium: 'Бронз',
     dimensions: { width: 40, height: 80, depth: 30, unit: 'cm' },
@@ -52,7 +44,7 @@ export const artworks: Artwork[] = [
   {
     id: '4',
     title: 'Дунавски хоризонт',
-    artist: artists[3],
+    artistName: 'Димитър Георгиев',
     category: ArtCategory.PHOTOGRAPHY,
     medium: 'Фотография, архивен печат',
     dimensions: { width: 90, height: 60, unit: 'cm' },
@@ -65,7 +57,7 @@ export const artworks: Artwork[] = [
   {
     id: '5',
     title: 'Есенна палитра',
-    artist: artists[4],
+    artistName: 'Елена Христова',
     category: ArtCategory.PAINTINGS,
     medium: 'Маслени бои върху платно',
     dimensions: { width: 100, height: 70, unit: 'cm' },
@@ -77,7 +69,7 @@ export const artworks: Artwork[] = [
   {
     id: '6',
     title: 'Форми в пространството',
-    artist: artists[2],
+    artistName: 'Мария Петрова',
     category: ArtCategory.SCULPTURE,
     medium: 'Мрамор',
     dimensions: { width: 35, height: 55, depth: 25, unit: 'cm' },
@@ -89,7 +81,7 @@ export const artworks: Artwork[] = [
   {
     id: '7',
     title: 'Графична серия „Памет"',
-    artist: artists[3],
+    artistName: 'Димитър Георгиев',
     category: ArtCategory.GRAPHICS,
     medium: 'Литография',
     dimensions: { width: 50, height: 70, unit: 'cm' },
@@ -101,7 +93,7 @@ export const artworks: Artwork[] = [
   {
     id: '8',
     title: 'Модерна импровизация',
-    artist: artists[4],
+    artistName: 'Елена Христова',
     category: ArtCategory.MODERN_ART,
     medium: 'Смесена техника',
     dimensions: { width: 150, height: 100, unit: 'cm' },
@@ -123,7 +115,7 @@ export const exhibitions: Exhibition[] = [
     endDate: new Date('2024-03-15'),
     status: ExhibitionStatus.CURRENT,
     coverImage: 'https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=800',
-    artists: [artists[0], artists[1], artists[4]],
+    artistNames: ['Нейчо Савчев', 'Иван Иванов', 'Елена Христова'],
     location: 'Главна зала',
     isFeatured: true,
   },
@@ -136,7 +128,7 @@ export const exhibitions: Exhibition[] = [
     endDate: new Date('2024-05-30'),
     status: ExhibitionStatus.UPCOMING,
     coverImage: 'https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=800',
-    artists: [artists[2]],
+    artistNames: ['Мария Петрова'],
     location: 'Скулптурна зала',
     isFeatured: true,
   },
@@ -149,7 +141,7 @@ export const exhibitions: Exhibition[] = [
     endDate: new Date('2023-12-15'),
     status: ExhibitionStatus.PAST,
     coverImage: 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=800',
-    artists: [artists[3]],
+    artistNames: ['Димитър Георгиев'],
     location: 'Фотогалерия',
   },
 ];

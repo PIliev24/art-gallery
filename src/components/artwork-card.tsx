@@ -26,7 +26,7 @@ export function ArtworkCard({ artwork, variant = 'default' }: ArtworkCardProps) 
               {artwork.title}
             </h3>
             <p className="mt-1 text-sm text-[var(--color-gallery-500)]">
-              {artwork.artist.name}
+              {artwork.artistName}
             </p>
           </div>
           <span className="shrink-0 text-xs tracking-wider text-[var(--color-gallery-400)] uppercase mt-1">

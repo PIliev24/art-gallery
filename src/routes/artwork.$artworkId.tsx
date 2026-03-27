@@ -40,7 +40,7 @@ function ArtworkDetailPage() {
   }
 
   const details = [
-    { label: 'Художник', value: artwork.artist.name },
+    { label: 'Художник', value: artwork.artistName },
     { label: 'Година', value: String(artwork.year) },
     { label: 'Категория', value: categoryLabels[artwork.category] || artwork.category },
     { label: 'Техника', value: artwork.medium },
@@ -90,7 +90,7 @@ function ArtworkDetailPage() {
                   {artwork.title}
                 </h1>
                 <p className="text-lg text-[var(--color-gallery-400)] mb-8">
-                  {artwork.artist.name}
+                  {artwork.artistName}
                 </p>
               </div>
 

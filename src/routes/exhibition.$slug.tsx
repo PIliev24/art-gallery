@@ -51,8 +51,8 @@ function ExhibitionDetailPage() {
     ...(exhibition.location
       ? [{ label: 'Място', value: exhibition.location }]
       : []),
-    ...(exhibition.artists.length > 0
-      ? [{ label: 'Художници', value: exhibition.artists.map(a => a.name).join(', ') }]
+    ...(exhibition.artistNames.length > 0
+      ? [{ label: 'Художници', value: exhibition.artistNames.join(', ') }]
       : []),
   ];
 
@@ -133,7 +133,7 @@ function ExhibitionDetailPage() {
       </section>
 
       {/* Artists */}
-      {exhibition.artists.length > 0 && (
+      {exhibition.artistNames.length > 0 && (
         <section className="py-20 md:py-28">
           <div className="mx-auto max-w-7xl px-6">
             <div className="flex items-center gap-3 mb-12">
@@ -144,19 +144,14 @@ function ExhibitionDetailPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {exhibition.artists.map((artist) => (
+              {exhibition.artistNames.map((name) => (
                 <div
-                  key={artist.id}
+                  key={name}
                   className="p-6 border border-[var(--color-gallery-200)] hover:border-[var(--color-gold-500)]/30 transition-colors duration-300"
                 >
-                  <h3 className="font-serif text-xl text-[var(--color-gallery-900)] mb-2">
-                    {artist.name}
+                  <h3 className="font-serif text-xl text-[var(--color-gallery-900)]">
+                    {name}
                   </h3>
-                  {artist.bio && (
-                    <p className="text-sm text-[var(--color-gallery-500)] leading-relaxed">
-                      {artist.bio}
-                    </p>
-                  )}
                 </div>
               ))}
             </div>
