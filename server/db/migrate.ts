@@ -4,7 +4,7 @@ import postgres from 'postgres';
 import { config } from '../config';
 
 async function runMigrations() {
-  const client = postgres(config.databaseUrl, { max: 1 });
+  const client = postgres(config.databaseUrl, { max: 1, prepare: false });
   const db = drizzle(client);
 
   console.log('Running migrations...');

@@ -7,7 +7,6 @@
     "dev:vite": "vite --port 3001",
     "dev:server": "bun --watch server/index.ts",
     "build": "vite build && tsc --noEmit",
-    "start": "NODE_ENV=production bun server/index.ts",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
